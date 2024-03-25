@@ -1,0 +1,10 @@
+{
+  "files.associations": {
+    "iostream": "cpp",
+    "cmath": "cpp",
+    "complex": "cpp",
+    "iosfwd": "cpp",
+    "bitset": "cpp",
+    "ostream": "cpp"
+  }
+}
