@@ -5,6 +5,10 @@
     "complex": "cpp",
     "iosfwd": "cpp",
     "bitset": "cpp",
-    "ostream": "cpp"
-  }
+    "ostream": "cpp",
+    "deque": "cpp",
+    "forward_list": "cpp",
+    "list": "cpp"
+  },
+  "cmake.configureOnOpen": false
 }

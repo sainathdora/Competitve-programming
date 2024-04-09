@@ -1,52 +1,46 @@
-#include <iostream>
-#include <vector>
-#include <bitset>
-
+#include <bits/stdc++.h>
 using namespace std;
-
-void solve(int n){
-    int no_of_groups = 0;
-    vector<bitset<31>> og;
-    vector<int> inputs;
-    while(n--) {
-        int t;
-        cin >> t;
-        inputs.push_back(t);
-    }
-    for(int &i : inputs) {
-        og.push_back(bitset<31>(i));
-    }
-    bool flag = true;
-    while(flag) {
-        for(int i = 0; i < og.size(); i++) {
-            for(int j = i + 1; j < og.size(); j++) {
-                if(og[i] == ~og[j]){
-                    ++no_of_groups;
-                    og.erase(og.begin() + i);
-                    og.erase(og.begin() + j - 1); 
-                    break;
-                }
-            }
+#define ll long long
+#define int long long
+#define PII pair<int, int>
+#define endl "\n"
+const int MAX = 1e9;
+const int N = 200010;
+const ll INF = 1e9+7;
+ 
+void solve()
+{
+    cout<<"entering solve()\n";
+     int n;
+     cin>>n;
+     vector<ll> v(n);
+     for(auto &x:v) cin>>x;
+     cout<<"done input\n";
+     map<ll,ll> m;
+     ll c=0;
+     for(int i=0;i<n; i++){
+        cout<<"i: "<<i<<endl;
+        ll mm= (2147483647^v[i]);
+        if(m[v[i]]==0){
+            c++;
+            m[mm]++;
         }
-        if(og.size() == 1 || og.empty()) {
-            if(og.size() == 1) {
-                no_of_groups++;
-            }
-            flag = false;
+        else{
+            m[v[i]]--;
         }
-    }
-    cout << no_of_groups << endl;
+     }
+     cout <<"this is c: "<< c<< endl;
 }
-
-int main() {
+ 
+signed main()
+{
     ios::sync_with_stdio(0);
-    cin.tie(0),cout.tie(0);
-    int a;
-    cin >> a; 
-    while(a--) {
-        int n;
-        cin >> n;
-        solve(n);
+    cin.tie(0);
+    cout.tie(0);
+    int T = 1;
+    cin >> T;
+    while (T--){
+        solve();
     }
     return 0;
 }

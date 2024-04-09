@@ -1,56 +1,51 @@
 #include <bits/stdc++.h>
-#include<bitset>
-#include <iostream>
+
 using namespace std;
+typedef vector<int> vi;
+#define endl "\n";
+typedef vector<string> vs;
 
-void solve(int n){
-    int no_of_groups=0;
-    vector<bitset<31>>og;
-    // fill the array with integers
-    while(n--){
-        int c;
-        cin>>c;
-        og.push_back(bitset<31>(c));
-    }
-    for(int i = 0; i<og.size(); i++){
-        cout<<"i: "<<i<<endl;
-        for(int j = i+1; j<=og.size(); j++){
-            if(og[i]==~og[j]){    
-                no_of_groups++;
-                cout<<"----------Start-------\n";
-                og.erase(og.begin()+i);
-                og.erase(og.begin()+j);
-                cout<<"popping: og["<<i<<"]"<<og[i]<<endl;
-                cout<<"popping: og["<<j<<"]"<<og[j]<<endl;
-                cout<<og[i]<<endl;
-                cout<<og[j]<<"\n---End----"<<endl;
-                // reset i = 0
-                i = 0;
-                j = i+1;
-            }
-        }
-            
-    }
-        
-    
-    cout<<og.size()+no_of_groups<<endl;
 
+int givedeadships(){
+	int n;
+	int k;
+	cin>>n>>k;
+	vi a(n);
+	for(int i{0}; i<n; i++)cin>>a[i];
+	int dead_ships = 0 ; 
+	for(int i{1}; i<=k; i++){
+		// use (-1) to power to identify alternative attacks;
+		// if(-1)**i == -1 attack first ship else last ship
+		if(pow((-1), i) == -1){
+			// subtract 1 from first ele and if its zero pop it;
+			a[0] -= 1;
+			if(a[0]==0){
+				dead_ships++;
+				a.erase(a.begin());
+			}
+		}else{
+			// subtract 1 from last ele
+			a[a.size()-1] -= 1;
+			if(a[a.size()-1]==0){
+				dead_ships++;
+				a.pop_back();
+			}
+		}
+	}
+	return dead_ships;
 }
+ 
 
 
 int main()
 {
-    ios::sync_with_stdio(0);
-    cin.tie(0),cout.tie(0);
-    int a;
-    cin>>a;
-    solve(a);
-    
-    /* each group contains only 2 elements from og vector, by knowing how many groups we have, we can subtract all it's
-     members from og vector then what ever left is the remaining individual group;
-     no_of_groups = 2
-     og.size()-2(no_of_groups) + no_of_groups= og.size()-no_of_groups
-     */
-
-    return 0;
+	// ios::sync_with_stdio(0);
+    // cin.tie(0);
+    // cout.tie(0);
+	int t;
+	cin>>t;
+	while(t--){
+		cout<<givedeadships()<<endl;
+	}
+	return 0;
 }
