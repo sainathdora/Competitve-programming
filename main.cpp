@@ -1,56 +1,45 @@
 #include <bits/stdc++.h>
-#include<bitset>
-#include <iostream>
+using namespace std;
+typedef vector<int> vi;
+#define endl "\n";
+typedef vector<string> vs;
+typedef vector<char> vc;
 using namespace std;
 
-void solve(int n){
-    int no_of_groups=0;
-    vector<bitset<31>>og;
-    // fill the array with integers
-    while(n--){
-        int c;
-        cin>>c;
-        og.push_back(bitset<31>(c));
-    }
-    for(int i = 0; i<og.size(); i++){
-        cout<<"i: "<<i<<endl;
-        for(int j = i+1; j<=og.size(); j++){
-            if(og[i]==~og[j]){    
-                no_of_groups++;
-                cout<<"----------Start-------\n";
-                og.erase(og.begin()+i);
-                og.erase(og.begin()+j);
-                cout<<"popping: og["<<i<<"]"<<og[i]<<endl;
-                cout<<"popping: og["<<j<<"]"<<og[j]<<endl;
-                cout<<og[i]<<endl;
-                cout<<og[j]<<"\n---End----"<<endl;
-                // reset i = 0
-                i = 0;
-                j = i+1;
-            }
+int KadaneAlgo(vi arr){
+    int m{0}, s{0};
+    for(int i(0); i<arr.size(); i++){
+        if(i==0){
+            m = arr[i];
+            s = arr[i];
+            continue;
         }
-            
+        s += arr[i];
+        if(m>s){
+            s = arr[i];
+        }
+        m = std::max(s, m);
     }
-        
-    
-    cout<<og.size()+no_of_groups<<endl;
-
+    return m;
 }
+
+vi removeSameParity(vi arr){
+    vi narr;
+    for(int i(0); i<(arr.size()-1); ++i){
+        if((arr[i]%2 == 0 && arr[i+1]%2 != 0) || (arr[i]%2 != 0 && arr[i+1]%2==0)){
+            narr.push_back(arr[i]);
+            narr.push_back(arr[i+1]);
+        }
+    }
+    return narr;
+}
+
 
 
 int main()
 {
     ios::sync_with_stdio(0);
     cin.tie(0),cout.tie(0);
-    int a;
-    cin>>a;
-    solve(a);
-    
-    /* each group contains only 2 elements from og vector, by knowing how many groups we have, we can subtract all it's
-     members from og vector then what ever left is the remaining individual group;
-     no_of_groups = 2
-     og.size()-2(no_of_groups) + no_of_groups= og.size()-no_of_groups
-     */
-
+ 
     return 0;
 }
