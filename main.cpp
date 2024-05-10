@@ -6,25 +6,18 @@ typedef vector<string> vs;
 typedef vector<char> vc;
  
 int KadaneAlgo(vi arr){
-    int m{0}, s{0};
+    int m{arr[0]}, s{0};
     for(int i(0); i<arr.size(); i++){
-        if(i==0){
-            m = arr[i];
-            s = arr[i];
-            continue;
-        }
         s += arr[i];
-        if(m>s){
-            s = arr[i];
-        }
         m = std::max(s, m);
+        if(s<0)s=0;
     }
     return m;
 }
 
 int main()
 {
-    vi a{1, 100, 3};
+    vi a{-2, 1, -3, 4, -1, 2, 1, -5, 4};
     cout<<KadaneAlgo(a);
     return 0;
 }
