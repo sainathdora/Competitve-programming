@@ -33,4 +33,5 @@ int main()
     permu("abc", "", vs);
     for(auto i:vs)cout<<i<<endl;
     return 0;
+    // --sainath dora
 }
