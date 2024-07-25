@@ -13,6 +13,7 @@ void find_sub(vc &s, int i, int j, vc &output){
         cout<<"\n";
         return;
     }
+    
     // left, include j
     output[j] = s[i];
     find_sub(s, i+1, j+1, output);
