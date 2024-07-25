@@ -1,6 +1,6 @@
 other.exe
 other.cpp
-main.exe
+*.exe
 .vscode/
 tempCodeRunnerFile.cpp
 tempCodeRunnerFile.exe

@@ -5,30 +5,32 @@ typedef vector<int> vi;
 typedef vector<string> vs;
 typedef vector<char> vc;
 using namespace std;
-void find_sub(vc &s, int i, int j, vc &output){
-    // base
-    if(s[i]=='0'){
-        output[j]='0';
-        for(auto &i:output)cout<<i<<" ";
-        cout<<"\n";
+
+void permu(string input, string op, vector<string>&vs){
+    if(input.size()==0){
+        vs.push_back(op);
         return;
     }
+    // recursive case
+    unordered_set<char>mp;
+    for(int i(0); i<input.size(); ++i){
+        if(mp.find(input[i])==mp.end()){
+            mp.insert(input[i]);
+            string newIP = input.substr(0, i)+input.substr(i+1);
+            string newout = op + input[i];
+            permu(newIP, newout, vs);
+        }
+    }
     
-    // left, include j
-    output[j] = s[i];
-    find_sub(s, i+1, j+1, output);
-    // right
-    find_sub(s, i+1, j, output);
 }
-
 
 
 int main()
 {
     ios::sync_with_stdio(0);
     cin.tie(0),cout.tie(0);
-    vc input{'a', 'b', 'c', '0'};
-    vc op(input.size()+1, '0');
-    find_sub(input, 0, 0, op);
+    vector<string>vs;
+    permu("abc", "", vs);
+    for(auto i:vs)cout<<i<<endl;
     return 0;
 }
