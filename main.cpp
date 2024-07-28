@@ -6,42 +6,47 @@ typedef vector<string> vs;
 typedef vector<char> vc;
 using namespace std;
 
-void Negative_Num_of_Every_Window_Size_k(vi arr, int k){
-    vi::iterator i = arr.begin();
-    vi::iterator j = arr.begin();
-    vi ans;
-    deque<int>dq;
-    while(j!=arr.end()){
-        // if j-i +1 == k then find its sum
-        if(*j<0)dq.push_back(*j);
+int find_anagrams(string s, string ptrn){
+    int k = ptrn.size();
+    map<char, int>mp;
+    for(char &i:ptrn){
+        mp[i]++;
+    }
+    string::iterator i = s.begin();
+    string::iterator j = s.begin();
+    int count =mp.size();
+    int ans{0};
+    while(j != s.end()){
         if(j-i+1<k){
-            j++;
-        }
-        else if(j-i+1==k){
-            if(dq.size()==0){
-                ans.push_back(0);
+            // see if j exists in map then rm 1 from mp
+            if(mp.find(*j) != mp.end()){
+                mp[*j]--;
+                if(mp[*j]==0)count--;
             }
-            else{
-                ans.push_back(dq.front());
-                if(*i == dq.front()){
-                    dq.pop_front();
-                }
+            j++;
+        }else if(j-i+1==k){
+             if(mp.find(*j) != mp.end()){
+                mp[*j]--;
+                if(mp[*j]==0)count--;
+            }
+            // check if any ony of the keys are zero
+            if(count==0)ans++;
+
+            if(mp.find(*i)!=mp.end()){
+                mp[*i]++;
+                if(mp[*i]>0)count++;
             }
             i++;
             j++;
         }
     }
-    for(int &k:ans)cout<<k<<" \n";
-    
-    
+    return ans;
 }
-
 
 int main()
 {
     ios::sync_with_stdio(0);
     cin.tie(0),cout.tie(0);
-    vi arr{12, -1, -7, 8, -15, 30, 15, 28};
-    Negative_Num_of_Every_Window_Size_k(arr, 3);
+    cout<<find_anagrams("aabaabaa", "aaba");
     // --sainath dora
 }
