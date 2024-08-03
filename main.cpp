@@ -8,23 +8,28 @@ typedef vector<long long> vll;
 typedef vector<char> vc;
 using namespace std;
 
-int Longest_Substring(string s, int k){
-    string::iterator i = s.begin(), j = s.begin();
+int Min_window_substring(string s, string t){
+    int mini = INT_MAX;
     map<char, int>mp;
-    int maxi = INT_MIN;
-    while(j != s.end()){
-        mp[*j]++;
-        if(mp.size()>k){
-            mp[*i]--;
-            if(mp[*i]==0)mp.erase(*i);
-            i++;
-        }else if(mp.size()==k){
-            int length_of_sub = j-i+1;
-            maxi = std::max(maxi, length_of_sub);
+    for(char &c:t)mp[c]++;
+    string::iterator i = s.begin(), j=s.begin();
+    int count = mp.size();
+    while(j!=s.end()){
+        if(mp.find(*j) != mp.end()){
+            mp[*j]--;
+            if(mp[*j]==0)count--;
+        }
+        if(count==0){
+            while(mp[*i]<0){
+                mp[*i]++;
+                i++;
+            }
+            int subarraysize = j-i+1;
+            mini = std::min(mini, subarraysize);
         }
         j++;
     }
-    return maxi;
+    return mini;
 }
 
 
@@ -32,7 +37,6 @@ int main()
 {
     ios::sync_with_stdio(0);
     cin.tie(0),cout.tie(0);
-    string s = "aabacbebebe";
-    cout<<Longest_Substring(s, 3);
+    cout<<Min_window_substring("TTTTA", "TTA");
     return 0;
 }
