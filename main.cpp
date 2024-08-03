@@ -8,35 +8,43 @@ typedef vector<long long> vll;
 typedef vector<char> vc;
 using namespace std;
 
-int Min_window_substring(string s, string t){
-    int mini = INT_MAX;
-    map<char, int>mp;
-    for(char &c:t)mp[c]++;
-    string::iterator i = s.begin(), j=s.begin();
-    int count = mp.size();
-    while(j!=s.end()){
-        if(mp.find(*j) != mp.end()){
-            mp[*j]--;
-            if(mp[*j]==0)count--;
-        }
-        if(count==0){
-            while(mp[*i]<0){
-                mp[*i]++;
-                i++;
-            }
-            int subarraysize = j-i+1;
-            mini = std::min(mini, subarraysize);
-        }
-        j++;
+void solve(string &s, string::iterator start, vs &op){
+    if(start+1==s.end()){
+        op.push_back(s);
+        return;
     }
-    return mini;
+    string::iterator i = start;
+    for(i; i != s.end(); i++){
+        // swap start with i
+        iter_swap(start, i);
+        solve(s, start+1, op);
+        iter_swap(start, i);
+
+    }
 }
 
+vs permute(string s){
+    vs op;
+    string::iterator start = s.begin();
+    string::iterator i = s.begin();
+    map<char, int>mp;
+    for(i; i != s.end(); i++){
+        // swap start with i
+        if(mp.find(*i)==mp.end()){
+            mp[*i]++;
+            iter_swap(start, i);
+            solve(s, start+1, op);
+            iter_swap(start, i);
+        }
+
+    }
+    return op; 
+}
 
 int main()
 {
     ios::sync_with_stdio(0);
     cin.tie(0),cout.tie(0);
-    cout<<Min_window_substring("TTTTA", "TTA");
+    for(auto i:permute("abc"))cout<<i<<endl;
     return 0;
 }
