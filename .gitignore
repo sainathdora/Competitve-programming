@@ -4,3 +4,4 @@ main.exe
 .vscode/
 tempCodeRunnerFile.cpp
 tempCodeRunnerFile.exe
+*.txt
